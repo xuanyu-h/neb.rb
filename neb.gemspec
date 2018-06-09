@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Spirit"]
   spec.email         = ["neverlandxy.naix@gmail.com"]
 
-  spec.summary       = %q{http://hahaha}
-  spec.description   = %q{http://hahaha}
-  spec.homepage      = "http://hahaha"
+  spec.summary       = %q{the Nebulas compatible Ruby API}
+  spec.description   = %q{the Nebulas compatible Ruby API}
+  spec.homepage      = "https://github.com/NaixSpirit/neb.rb"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

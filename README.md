@@ -1,8 +1,6 @@
-# Neb
+# Nebulas Ruby API
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/neb`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This is the Nebulas compatible Ruby API. Users can use it in Ruby and Rails. This ruby library also support API for our Repl console. Users can sign/send transactions and deploy/call smart contract with it. [neb.rb](https://github.com/NaixSpirit/neb.rb)
 
 ## Installation
 
@@ -22,7 +20,24 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+Neb.configure(host: 'https://testnet.nebulas.io')
+
+client = Neb::Client.new
+resp = client.get_neb_state
+resp.code # => 200
+resp.success? # => true
+resp.result
+# {
+#   chain_id: 1001,
+#   tail: "9a382a5b4b0be1a74ba9ca554b840ae711c055c591272e7882755c604e04a428",
+#   lib: "10b3c7c219befb2bac79ec67f4cfe1c86bbdf28c8f60af4f3e1255b27477689f",
+#   height: "390329",
+#   protocol_version: "/neb/1.0.0",
+#   synchronized: false,
+#   version: "0.7.0"
+# }
+```
 
 ## Development
 
