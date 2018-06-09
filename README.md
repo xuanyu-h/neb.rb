@@ -44,6 +44,7 @@ resp.result
 ## API list
 <a target="_blank" href="https://github.com/NaixSpirit/neb.rb/blob/master/lib/neb/api.rb">Public API documentation link</a>
 
+[Ruby API list](https://github.com/NaixSpirit/neb.rb/blob/master/lib/neb/api.rb)
 
 ## Development
 
