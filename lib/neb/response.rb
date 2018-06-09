@@ -24,7 +24,7 @@ module Neb
     end
 
     def error
-      JSON.parse(body, symbolize_names: true) if !success?
+      JSON.parse(body, symbolize_names: true)[:error] if !success?
     end
 
     def success?

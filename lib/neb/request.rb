@@ -16,16 +16,20 @@ module Neb
       "#{self.class}{action=#{action}, url=#{url}, payload=#{payload}}"
     end
 
+    def request_args
+      {
+        method:  action,
+        url:     url,
+        payload: payload.camelize_keys(:lower).to_json,
+        headers: { content_type: :json, accept: :json }
+      }
+    end
+
     def execute
       Neb.logger.debug(self.to_s)
-      Response.new(
-        ::RestClient::Request.execute(
-          method:  action,
-          url:     url,
-          payload: payload.camelize_keys(:lower).to_json,
-          headers: { content_type: :json, accept: :json }
-        )
-      )
+      ::RestClient::Request.execute(request_args) do |resp, _, _|
+        Response.new(resp)
+      end
     end
 
     private
