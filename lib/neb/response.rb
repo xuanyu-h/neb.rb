@@ -10,21 +10,13 @@ module Neb
 
     SUCCESS_CODE = 200
 
-    def initialize(action, url, params = {})
-      @action = action
-      @url    = url
-      @params = params
+    def initialize(response)
+      @response = response
+      Neb.logger.debug(self.to_s)
     end
 
-    def execute
-      @response = ::RestClient::Request.execute(
-        method:  @action,
-        url:     @url,
-        payload: @params.camelize_keys(:lower).to_json,
-        headers: { content_type: :json, accept: :json }
-      )
-
-      self
+    def to_s
+      "#{self.class}{code=#{code}, body=#{body}}"
     end
 
     def result

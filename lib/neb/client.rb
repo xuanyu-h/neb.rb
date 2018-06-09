@@ -8,7 +8,6 @@ module Neb
     def initialize(config = {})
       Neb.configure(config) unless Neb.configured?
     end
-
   end
 end
 

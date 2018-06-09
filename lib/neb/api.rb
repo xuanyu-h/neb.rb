@@ -7,8 +7,8 @@ module Neb
       @api_end_point ||= "#{CONFIG[:host]}/#{CONFIG[:api_version]}/user"
     end
 
-    def send_request(http_method, url, payload = {})
-      Response.new(http_method, api_end_point + url, payload).execute
+    def send_request(action, url, payload = {})
+      Request.new(action, api_end_point + url, payload).execute
     end
 
     def get_neb_state
