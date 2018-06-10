@@ -36,4 +36,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry", "~> 0.11"
 
   spec.add_dependency "rest-client", "~> 2.0"
+  spec.add_dependency "base58", "~> 0.2"
+  spec.add_dependency "activesupport", "~> 5"
 end
