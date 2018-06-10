@@ -9,6 +9,7 @@ require "base58"
 require "active_support/all"
 
 require "neb/version"
+require "neb/core_ext"
 require "neb/configuration"
 require "neb/api"
 require "neb/request"
