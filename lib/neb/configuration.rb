@@ -1,16 +1,20 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
+require "forwardable"
+
 module Neb
   class Configuration
     extend Forwardable
     def_delegators :@hash, :to_hash, :[], :[]=, :==, :fetch, :delete, :has_key?
 
     DEFAULTS = {
-      host:        "http://localhost:8685",
-      timeout:     "0",
-      api_version: "v1",
-      log:         "log/neb.log"
+      host:           "http://localhost:8685",
+      timeout:        "0",
+      api_version:    "/v1",
+      log:            "log/neb.log",
+      api_endpoint:   "/user",
+      admin_endpoint: "/admin"
     }.freeze
 
     def initialize

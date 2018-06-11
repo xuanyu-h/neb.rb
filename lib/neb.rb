@@ -1,20 +1,14 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-require "forwardable"
 require "logger"
-require "rest-client"
-require "json"
-require "base58"
-require "active_support/all"
 
 require "neb/version"
 require "neb/core_ext"
 require "neb/configuration"
-require "neb/api"
-require "neb/request"
-require "neb/response"
+require "neb/utils"
 require "neb/client"
+require "neb/account"
 
 module Neb
   extend self
