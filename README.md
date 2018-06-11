@@ -2,6 +2,10 @@
 
 This is the Nebulas compatible Ruby API. Users can use it in Ruby and Rails. This ruby library also support API for our Repl console. Users can sign/send transactions and deploy/call smart contract with it. [neb.rb](https://github.com/NaixSpirit/neb.rb)
 
+## Install Secp256k1
+
+https://github.com/cryptape/ruby-bitcoin-secp256k1
+
 ## Installation
 
 Add this line to your application's Gemfile:
