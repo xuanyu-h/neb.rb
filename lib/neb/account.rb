@@ -31,6 +31,7 @@ module Neb
 
     # TODO: uncompleted
     def to_key(password)
+
     end
 
   end

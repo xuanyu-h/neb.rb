@@ -35,6 +35,11 @@ module Neb
     def base58(x)
       Base58.binary_to_base58(x, :bitcoin)
     end
+    alias_method :binary_to_base58, :base58
+
+    def base58_to_binary(b)
+      Base58.base58_to_binary(b, :bitcoin)
+    end
 
     def lpad(x, symbol, l)
       return x if x.size >= l
