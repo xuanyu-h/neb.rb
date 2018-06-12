@@ -36,6 +36,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry", "~> 0.11"
 
   spec.add_dependency "rest-client", "~> 2.0"
-  spec.add_dependency "activesupport", "> 3"
-  spec.add_dependency "ruby-ethereum", "~> 0.10"
+  spec.add_dependency "activesupport", "~> 5"
+  spec.add_dependency "bitcoin-secp256k1", "~> 0.4"
+  spec.add_dependency "ffi", "~> 1.9"
+  spec.add_dependency "sha3", "~> 1.0"
+  spec.add_dependency "base58", "~> 0.2"
 end
