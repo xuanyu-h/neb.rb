@@ -5,12 +5,46 @@ require 'digest'
 require 'sha3'
 require 'openssl'
 require 'base58'
+require 'securerandom'
+require 'scrypt'
 
 module Neb
   module Utils
     extend self
 
     include Constant
+
+    # args: n, r, p, key_len
+    def scrypt(secret, salt, *args)
+      SCrypt::Engine.scrypt(secret, salt, *args)
+    end
+
+    def aes_encrypt(bin_raw_content, bin_key, bin_iv)
+      cipher = OpenSSL::Cipher::AES128.new(:ctr)
+      cipher.encrypt
+      cipher.key = bin_key
+      cipher.iv = bin_iv
+
+      result = cipher.update(bin_raw_content)
+      result += cipher.final
+      result
+    end
+
+    def uuid
+      SecureRandom.uuid
+    end
+
+    def bin_to_hex(bytes)
+      BaseConvert.convert(bytes, 256, 16)
+    end
+
+    def hex_to_bin(hex)
+      BaseConvert.convert(hex, 16, 256)
+    end
+
+    def random_bytes(size = 32)
+      SecureRandom.random_bytes(size)
+    end
 
     def keccak256(x)
       SHA3::Digest::SHA256.digest(x)
@@ -52,7 +86,7 @@ module Neb
     end
 
     def zpad(x, l)
-      lpad x, BYTE_ZERO, l
+      lpad(x, BYTE_ZERO, l)
     end
 
     def mod_exp(x, y, n)

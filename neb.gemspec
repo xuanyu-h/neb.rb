@@ -41,4 +41,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "ffi", "~> 1.9"
   spec.add_dependency "sha3", "~> 1.0"
   spec.add_dependency "base58", "~> 0.2"
+  spec.add_dependency "scrypt", "~> 3.0"
 end

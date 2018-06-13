@@ -27,7 +27,7 @@ module Neb
       encode decode(s, from), to, minlen
     end
 
-    def encode(v, base, minlen)
+    def encode(v, base, minlen=0)
       syms = symbols(base)
 
       result = ''

@@ -4,6 +4,9 @@
 module Neb
   class Account
     attr_reader :private_key_obj, :public_key_obj, :address_obj
+    attr_accessor :password
+
+    alias_method :set_password, :password=
 
     def initialize(private_key)
       @private_key_obj = PrivateKey.new(private_key)

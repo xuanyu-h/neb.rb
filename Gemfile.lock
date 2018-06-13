@@ -7,6 +7,7 @@ PATH
       bitcoin-secp256k1 (~> 0.4)
       ffi (~> 1.9)
       rest-client (~> 2.0)
+      scrypt (~> 3.0)
       sha3 (~> 1.0)
 
 GEM
@@ -25,6 +26,9 @@ GEM
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     ffi (1.9.25)
+    ffi-compiler (1.0.1)
+      ffi (>= 1.0.0)
+      rake
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (1.0.1)
@@ -43,6 +47,8 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    scrypt (3.0.5)
+      ffi-compiler (>= 1.0, < 2.0)
     sha3 (1.0.1)
     thread_safe (0.3.6)
     tzinfo (1.2.5)

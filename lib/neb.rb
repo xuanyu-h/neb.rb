@@ -16,6 +16,7 @@ require "neb/private_key"
 require "neb/public_key"
 require "neb/address"
 require "neb/account"
+require "neb/key"
 
 module Neb
   extend self

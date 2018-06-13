@@ -83,7 +83,7 @@ module Neb
     class << self
 
       def random
-        new(SecureRandom.random_bytes(32))
+        new(Utils.random_bytes)
       end
     end
 
