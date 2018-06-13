@@ -38,16 +38,16 @@ module Neb
       when :decimal
         raw
       when :bin
-        [BaseConvert.decode(raw[1,32], 256), BaseConvert.decode(raw[33,32], 256)]
+        [BaseConvert.decode(raw[1, 32], 256), BaseConvert.decode(raw[33, 32], 256)]
       when :bin_compressed
-        x = BaseConvert.decode raw[1,32], 256
+        x = BaseConvert.decode raw[1, 32], 256
         m = x*x*x + Secp256k1::A*x + Secp256k1::B
         n = Utils.mod_exp(m, (Secp256k1::P+1)/4, Secp256k1::P)
         q = (n + raw[0].ord) % 2
         y = q == 1 ? (Secp256k1::P - n) : n
         [x, y]
       when :hex
-        [BaseConvert.decode(raw[2,64], 16), BaseConvert.decode(raw[66,64], 16)]
+        [BaseConvert.decode(raw[2, 64], 16), BaseConvert.decode(raw[66, 64], 16)]
       when :hex_compressed
         PublicKey.new(Utils.decode_hex(raw)).decode :bin_compressed
       else

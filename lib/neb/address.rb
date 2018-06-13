@@ -5,22 +5,66 @@ require 'active_support/security_utils'
 
 module Neb
   class Address
-    attr_reader :bytes
+    attr_reader :raw
 
-    def initialize(bytes)
-      @bytes = bytes
+    def initialize(raw)
+      @raw = raw
     end
 
-    def to_bytes(extended = true)
-      extended ? "#{bytes}#{checksum}" : bytes
+    def value
+      @value ||= decode
     end
 
     def to_s
-      Utils.base58(to_bytes)
+      encode(:hex_extended)
     end
 
     def checksum
-      Utils.keccak256(bytes)[0, 4]
+      Utils.keccak256(encode(:bin))[0, 4]
+    end
+
+    def encode(fmt)
+      case fmt
+      when :decimal
+        raw
+      when :bin
+        BaseConvert.encode(value, 256, 22)
+      when :bin_extended
+        "#{BaseConvert.encode(value, 256, 22)}#{checksum}"
+      when :hex
+        Utils.binary_to_base58(BaseConvert.encode(value, 256, 22))
+      when :hex_extended
+        Utils.binary_to_base58("#{BaseConvert.encode(value, 256, 22)}#{checksum}")
+      else
+        raise ArgumentError, "invalid format: #{fmt}"
+      end
+    end
+
+    def decode(fmt = nil)
+      fmt ||= format
+
+      case fmt
+      when :decimal
+        raw
+      when :bin
+        BaseConvert.decode(raw, 256)
+      when :bin_extended
+        BaseConvert.decode(raw[0, 22], 256)
+      when :hex
+        BaseConvert.decode(Utils.base58_to_binary(raw), 256)
+      when :hex_extended
+        BaseConvert.decode(Utils.base58_to_binary(raw)[0, 22], 256)
+      else
+        raise FormatError, "Invalid format!"
+      end
+    end
+
+    def format
+      return :decimal if raw.is_a?(Numeric)
+      return :bin if raw.size == 22
+      return :bin_extended if raw.size == 26
+      return :hex if raw.size == 30
+      return :hex_extended if raw.size == 35
     end
 
     class << self
@@ -42,7 +86,6 @@ module Neb
           Utils.keccak256(content)[0, 4], checksum
         )
       end
-
     end
 
   end

@@ -13,8 +13,8 @@ module Neb
       encode(:hex)
     end
 
-    def encode(fmt, vbyte = 0)
-      return self.class.new(value).encode(fmt, vbyte) unless raw.is_a?(Numeric)
+    def encode(fmt)
+      return self.class.new(value).encode(fmt) unless raw.is_a?(Numeric)
 
       case fmt
       when :decimal
@@ -41,11 +41,11 @@ module Neb
       when :bin
         BaseConvert.decode(raw, 256)
       when :bin_compressed
-        BaseConvert.decode(raw[0,32], 256)
+        BaseConvert.decode(raw[0, 32], 256)
       when :hex
         BaseConvert.decode(raw, 16)
       when :hex_compressed
-        BaseConvert.decode(raw[0,64], 16)
+        BaseConvert.decode(raw[0, 64], 16)
       else
         raise ArgumentError, "WIF does not represent privkey"
       end
