@@ -30,26 +30,24 @@ Neb.configure(host: 'https://testnet.nebulas.io')
 client = Neb::Client.new
 # The client API
 resp = client.api.get_neb_state
-resp.code # => 200
+resp.code     # => 200
 resp.success? # => true
 resp.result   # =>  {:chain_id=>100, :tail=>"xxxx", :lib=>"xxxx", :height=>"1085", :protocol_version=>"/neb/1.0.0", :synchronized=>false, :version=>"1.0.1"}
 
 # The Admin API
 resp = client.admin.accounts
-resp.code # => 200
+resp.code     # => 200
 resp.success? # => true
 resp.result   # => {:addresses=>["n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE", "n1FNj5aZhKFeFJ8cQ26Lvsr84NDvNSVRu67"]}
 
 # Create a new account with random private_key
 # or account = Neb::Account.create(YOUR_PASSOWRD)
 account = Neb::Account.create
-account.private_key # => "b5e53a1582a48d243ebd478a7722d1bfea4805ff7c1da4cc7084043e8263c5a8"
-account.public_key  # => "35a80ac8a27e2bf072ae84b2cb019e3af0c06547ad939fab1c6d12f713d26ae178d1fd6677aef3e6e94bc7cc1a39f4ca80fc2409a5ef59f97ee55dbd6efc7714"
-account.address     # => "n1NfnKqgXBixjiDkJZDSVwqf7ps5roGwFyJ"
-
-# or account.set_password("123456")
-account.password = "123456"
-account.to_key      # => {:version=>4, :id=>"becde267-902e-4f23-ac01-53a4ba6edac7", :address=>"n1VYLxkZoehWEWPHxi351HgZ2R8Hfn2DGpa" ....}
+account.private_key         # => "b5e53a1582a48d243ebd478a7722d1bfea4805ff7c1da4cc7084043e8263c5a8"
+account.public_key          # => "35a80ac8a27e2bf072ae84b2cb019e3af0c06547ad939fab1c6d12f713d26ae178d1fd6677aef3e6e94bc7cc1a39f4ca80fc2409a5ef59f97ee55dbd6efc7714"
+account.address             # => "n1NfnKqgXBixjiDkJZDSVwqf7ps5roGwFyJ"
+account.password = "123456" # or account.set_password("123456")
+account.to_key              # => {:version=>4, :id=>"becde267-902e-4f23-ac01-53a4ba6edac7", :address=>"n1VYLxkZoehWEWPHxi351HgZ2R8Hfn2DGpa" ....}
 account.to_key_file("/tmp/mykey.json")
 
 # Create a new account from exist private_key
