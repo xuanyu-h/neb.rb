@@ -18,6 +18,13 @@ module Neb
       def create
         new(PrivateKey.random.to_s)
       end
+
+      def to_key(account)
+        account.to_key
+      end
+
+      def from_key(key)
+      end
     end
 
     def private_key
@@ -32,10 +39,7 @@ module Neb
       @address_obj.to_s
     end
 
-    # TODO: uncompleted
-    def to_key(password)
-
+    def to_key
     end
-
   end
 end

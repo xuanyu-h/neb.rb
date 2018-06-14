@@ -2,9 +2,6 @@
 # frozen_string_literal: true
 
 module Neb
-  #
-  # @see https://github.com/cryptape/ruby-ethereum/blob/master/lib/ethereum/constant.rb
-  #
   class DeprecatedError < StandardError; end
   class ChecksumError < StandardError; end
   class FormatError < StandardError; end
