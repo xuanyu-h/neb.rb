@@ -41,8 +41,9 @@ resp.success? # => true
 resp.result   # => {:addresses=>["n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE", "n1FNj5aZhKFeFJ8cQ26Lvsr84NDvNSVRu67"]}
 
 # Create a new account with random private_key
-# or account = Neb::Account.create(YOUR_PASSOWRD)
 account = Neb::Account.create
+account = Neb::Account.create(YOUR_PASSOWRD)
+
 account.private_key         # => "b5e53a1582a48d243ebd478a7722d1bfea4805ff7c1da4cc7084043e8263c5a8"
 account.public_key          # => "35a80ac8a27e2bf072ae84b2cb019e3af0c06547ad939fab1c6d12f713d26ae178d1fd6677aef3e6e94bc7cc1a39f4ca80fc2409a5ef59f97ee55dbd6efc7714"
 account.address             # => "n1NfnKqgXBixjiDkJZDSVwqf7ps5roGwFyJ"
@@ -52,6 +53,7 @@ account.to_key_file("/tmp/mykey.json")
 
 # Create a new account from exist private_key
 account = Neb::Account.new(YOUR_PRIVATE_KEY)
+account = Neb::Account.new(YOUR_PRIVATE_KEY, YOUR_PASSOWRD)
 
 # Restore account from jsonify key
 account = Neb::Account.from_key(YOUR_KEY, YOUR_PASSOWRD)
