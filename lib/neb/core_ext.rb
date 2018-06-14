@@ -1,8 +1,6 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-require "active_support/all"
-
 class Hash
   # Returns a new hash with all keys converted to UpperCamelCase strings.If th
   # is set to <tt>:lower</tt> then camelize produces lowerCamelCase.

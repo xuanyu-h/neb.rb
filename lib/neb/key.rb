@@ -25,30 +25,6 @@ module Neb
       @iv          = convert_iv(iv || Utils.random_bytes(16))
     end
 
-    def convert_salt(salt)
-      if salt.length != 32 || salt.encoding != Encoding::ASCII_8BIT
-        if salt.length == 64 && salt.encoding == Encoding::UTF_8
-          salt = Utils.hex_to_bin(salt)
-        else
-          raise ArgumentError.new("salt must be 32 bytes")
-        end
-      end
-
-      salt
-    end
-
-    def convert_iv(iv)
-      if iv.length != 16 || iv.encoding != Encoding::ASCII_8BIT
-        if iv.length == 32 && iv.encoding == Encoding::UTF_8
-          iv = Utils.hex_to_bin(iv)
-        else
-          raise ArgumentError.new("iv must be 16 bytes")
-        end
-      end
-
-      iv
-    end
-
     def encrypt
       derived_key = Utils.scrypt(password, salt, KDF_N, KDF_R, KDF_P, DKLEN)
       cipher_bin  = Utils.aes_encrypt(private_key.encode(:bin), derived_key[0, 16], @iv)
@@ -81,6 +57,41 @@ module Neb
     def decrypt
     end
 
+    class << self
+
+      def encrypt(address, private_key, password)
+        new(address: address, private_key: private_key, password: password).encrypt
+      end
+
+      def decrypt
+      end
+    end
+
+    private
+
+    def convert_salt(salt)
+      if salt.length != 32 || salt.encoding != Encoding::ASCII_8BIT
+        if salt.length == 64 && salt.encoding == Encoding::UTF_8
+          salt = Utils.hex_to_bin(salt)
+        else
+          raise ArgumentError.new("salt must be 32 bytes")
+        end
+      end
+
+      salt
+    end
+
+    def convert_iv(iv)
+      if iv.length != 16 || iv.encoding != Encoding::ASCII_8BIT
+        if iv.length == 32 && iv.encoding == Encoding::UTF_8
+          iv = Utils.hex_to_bin(iv)
+        else
+          raise ArgumentError.new("iv must be 16 bytes")
+        end
+      end
+
+      iv
+    end
 
   end
 end

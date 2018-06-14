@@ -1,8 +1,5 @@
-# -*- encoding : ascii-8bit -*-
-
-require 'base64'
-require 'secp256k1'
-require 'securerandom'
+# encoding: utf-8
+# frozen_string_literal: true
 
 module Neb
   module Secp256k1

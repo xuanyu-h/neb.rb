@@ -1,18 +1,15 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-require 'digest'
-require 'sha3'
-require 'openssl'
-require 'base58'
-require 'securerandom'
-require 'scrypt'
-
 module Neb
   module Utils
     extend self
 
     include Constant
+
+    def secure_compare(a, b)
+      ActiveSupport::SecurityUtils.secure_compare(a, b)
+    end
 
     # args: n, r, p, key_len
     def scrypt(secret, salt, *args)

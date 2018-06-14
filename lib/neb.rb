@@ -2,13 +2,25 @@
 # frozen_string_literal: true
 
 require "logger"
+require "pathname"
+require "digest"
+require "sha3"
+require "openssl"
+require "base58"
+require "securerandom"
+require "scrypt"
+require "active_support/all"
+require "json"
+require "forwardable"
+require "rest-client"
+require "secp256k1"
 
 require "neb/version"
-require "neb/core_ext"
-require "neb/configuration"
 require "neb/exceptions"
 require "neb/constant"
 require "neb/utils"
+require "neb/core_ext"
+require "neb/configuration"
 require "neb/base_convert"
 require "neb/client"
 require "neb/secp256k1"
@@ -35,6 +47,10 @@ module Neb
     CONFIG.clear
     @logger = nil
     @configured = false
+  end
+
+  def root
+    Pathname.new(File.expand_path('../..', __FILE__))
   end
 
   private

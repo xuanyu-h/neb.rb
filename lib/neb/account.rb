@@ -8,10 +8,11 @@ module Neb
 
     alias_method :set_password, :password=
 
-    def initialize(private_key)
+    def initialize(private_key, password = nil)
       @private_key_obj = PrivateKey.new(private_key)
       @public_key_obj  = @private_key_obj.to_pubkey_obj
       @address_obj     = @public_key_obj.to_address_obj
+      @password        = password
     end
 
     class << self
@@ -40,6 +41,17 @@ module Neb
     end
 
     def to_key
+      raise ArgumentError.new("must set_password first") if password.blank?
+      Key.encrypt(address, private_key, password)
+    end
+
+    def to_file(fdir = nil, fname = nil)
+      file_dir  = fdir || Neb.root.join('tmp')
+      file_name = fname || "#{address}.json"
+
+      File.open(file_dir.join(file_name), 'w+') do |f|
+        f << JSON.generate(to_key)
+      end
     end
   end
 end

@@ -2,9 +2,6 @@
 # frozen_string_literal: true
 
 module Neb
-  #
-  # @see https://github.com/cryptape/ruby-ethereum/blob/master/lib/ethereum/constant.rb
-  #
   module Constant
 
     BYTE_EMPTY = "".freeze
