@@ -55,7 +55,7 @@ account.to_key_file("/tmp/mykey.json")
 account = Neb::Account.new(YOUR_PRIVATE_KEY)
 account = Neb::Account.new(YOUR_PRIVATE_KEY, YOUR_PASSOWRD)
 
-# Restore account from jsonify key
+# Restore account from key
 account = Neb::Account.from_key(YOUR_KEY, YOUR_PASSOWRD)
 
 # Restore account from a key file
