@@ -3,6 +3,7 @@
 
 module Neb
   class DeprecatedError < StandardError; end
+  class InvalidJSONKeyError < StandardError; end
   class ChecksumError < StandardError; end
   class FormatError < StandardError; end
   class ValidationError < StandardError; end

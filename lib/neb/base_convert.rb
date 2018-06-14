@@ -24,7 +24,7 @@ module Neb
 
     def convert(s, from, to, minlen=0)
       return Utils.lpad(s, symbols(from)[0], minlen) if from == to
-      encode decode(s, from), to, minlen
+      encode(decode(s, from), to, minlen)
     end
 
     def encode(v, base, minlen=0)
@@ -36,7 +36,7 @@ module Neb
         v /= base
       end
 
-      Utils.lpad result, syms[0], minlen
+      Utils.lpad(result, syms[0], minlen)
     end
 
     def decode(s, base)

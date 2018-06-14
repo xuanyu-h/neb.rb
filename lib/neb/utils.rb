@@ -7,6 +7,14 @@ module Neb
 
     include Constant
 
+    def to_json(h)
+      JSON.generate(h)
+    end
+
+    def from_json(s)
+      JSON.parse(s, symbolize_names: true)
+    end
+
     def secure_compare(a, b)
       ActiveSupport::SecurityUtils.secure_compare(a, b)
     end
@@ -16,13 +24,24 @@ module Neb
       SCrypt::Engine.scrypt(secret, salt, *args)
     end
 
-    def aes_encrypt(bin_raw_content, bin_key, bin_iv)
+    def aes_encrypt(raw, bin_key, bin_iv)
       cipher = OpenSSL::Cipher::AES128.new(:ctr)
       cipher.encrypt
       cipher.key = bin_key
       cipher.iv = bin_iv
 
-      result = cipher.update(bin_raw_content)
+      result = cipher.update(raw)
+      result += cipher.final
+      result
+    end
+
+    def aes_decrypt(ciphertext, bin_key, bin_iv)
+      cipher = OpenSSL::Cipher::AES128.new(:ctr)
+      cipher.decrypt
+      cipher.key = bin_key
+      cipher.iv = bin_iv
+
+      result = cipher.update(ciphertext)
       result += cipher.final
       result
     end

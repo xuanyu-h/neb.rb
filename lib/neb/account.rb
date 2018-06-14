@@ -24,7 +24,13 @@ module Neb
         account.to_key
       end
 
-      def from_key(key)
+      def from_key(json_key, password)
+        private_key = Key.decrypt(json_key, password)
+        new(private_key, password)
+      end
+
+      def from_key_file(key_file, password)
+        from_key(File.read(key_file), password)
       end
     end
 
@@ -42,16 +48,14 @@ module Neb
 
     def to_key
       raise ArgumentError.new("must set_password first") if password.blank?
-      Key.encrypt(address, private_key, password)
+      Utils.to_json(Key.encrypt(address, private_key, password))
     end
 
-    def to_file(fdir = nil, fname = nil)
+    def to_key_file(fdir = nil, fname = nil)
       file_dir  = fdir || Neb.root.join('tmp')
       file_name = fname || "#{address}.json"
 
-      File.open(file_dir.join(file_name), 'w+') do |f|
-        f << JSON.generate(to_key)
-      end
+      File.open(file_dir.join(file_name), 'w+') { |f| f << to_key }
     end
   end
 end
