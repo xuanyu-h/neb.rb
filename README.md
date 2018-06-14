@@ -28,26 +28,45 @@ Or install it yourself as:
 Neb.configure(host: 'https://testnet.nebulas.io')
 
 client = Neb::Client.new
-resp = client.get_neb_state
+# The client API
+resp = client.api.get_neb_state
 resp.code # => 200
 resp.success? # => true
-resp.result
-# {
-#   chain_id: 1001,
-#   tail: "9a382a5b4b0be1a74ba9ca554b840ae711c055c591272e7882755c604e04a428",
-#   lib: "10b3c7c219befb2bac79ec67f4cfe1c86bbdf28c8f60af4f3e1255b27477689f",
-#   height: "390329",
-#   protocol_version: "/neb/1.0.0",
-#   synchronized: false,
-#   version: "0.7.0"
-# }
+resp.result   # =>  {:chain_id=>100, :tail=>"xxxx", :lib=>"xxxx", :height=>"1085", :protocol_version=>"/neb/1.0.0", :synchronized=>false, :version=>"1.0.1"}
+
+# The Admin API
+resp = client.admin.accounts
+resp.code # => 200
+resp.success? # => true
+resp.result   # => {:addresses=>["n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE", "n1FNj5aZhKFeFJ8cQ26Lvsr84NDvNSVRu67"]}
+
+# Create a new account with random private_key
+account = Neb::Account.create
+account.private_key # => "b5e53a1582a48d243ebd478a7722d1bfea4805ff7c1da4cc7084043e8263c5a8"
+account.public_key  # => "35a80ac8a27e2bf072ae84b2cb019e3af0c06547ad939fab1c6d12f713d26ae178d1fd6677aef3e6e94bc7cc1a39f4ca80fc2409a5ef59f97ee55dbd6efc7714"
+account.address     # => "n1NfnKqgXBixjiDkJZDSVwqf7ps5roGwFyJ"
+
+# or account.set_password("123456")
+account.password = "123456"
+account.to_key      # => "{\"version\":4,\"id\":\"5019782f-33e2-4dc8-aee0-92f237244fe2\",\"address\":\"n1NfnKqgXBixjiDkJZDSVwqf7ps5.....
+account.to_key_file("/tmp", "mykey.json")
+
+# Create a new account from exist private_key
+account = Neb::Account.new(YOUR_PRIVATE_KEY)
+
+# Restore account from jsonify key
+account = Neb::Account.from_key(YOUR_JSONIFY_KEY, YOUR_PASSOWRD)
+
+# Restore account from a key file
+account = Neb::Account.from_key_file(YOUR_KEY_FILE, YOUR_PASSOWRD)
 ```
 
 # Documentation
 
 ## API list
 
-[Ruby API list](https://github.com/NaixSpirit/neb.rb/blob/master/lib/neb/api.rb)
+[Ruby Client API list](https://github.com/NaixSpirit/neb.rb/blob/master/lib/neb/client/api.rb)
+[Ruby Admin API list](https://github.com/NaixSpirit/neb.rb/blob/master/lib/neb/client/admin.rb)
 
 ## Development
 

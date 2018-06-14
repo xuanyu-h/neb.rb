@@ -54,9 +54,6 @@ module Neb
       }
     end
 
-    def decrypt
-    end
-
     class << self
 
       def encrypt(address, private_key, password)
