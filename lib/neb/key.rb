@@ -62,6 +62,8 @@ module Neb
 
       def decrypt(key_data, password)
         key_data = Utils.from_json(key_data) if key_data.is_a?(String)
+        key_data = key_data.deep_symbolize_keys!
+
         raise InvalidJSONKeyError if !validate?(key_data)
 
         version = key_data[:version]

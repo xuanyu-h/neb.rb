@@ -16,8 +16,8 @@ module Neb
     end
 
     class << self
-      def create
-        new(PrivateKey.random.to_s)
+      def create(password = nil)
+        new(PrivateKey.random.to_s, password)
       end
 
       def to_key(account)
@@ -48,14 +48,12 @@ module Neb
 
     def to_key
       raise ArgumentError.new("must set_password first") if password.blank?
-      Utils.to_json(Key.encrypt(address, private_key, password))
+      Key.encrypt(address, private_key, password)
     end
 
-    def to_key_file(fdir = nil, fname = nil)
-      file_dir  = fdir || Neb.root.join('tmp')
-      file_name = fname || "#{address}.json"
-
-      File.open(file_dir.join(file_name), 'w+') { |f| f << to_key }
+    def to_key_file(file_path = nil)
+      file_path = Neb.root.join('tmp', "#{address}.json") if file_path.blank?
+      File.open(file_path, 'w+') { |f| f << Utils.to_json(to_key) }
     end
   end
 end
