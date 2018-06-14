@@ -14,6 +14,7 @@ require "json"
 require "forwardable"
 require "rest-client"
 require "secp256k1"
+require "google/protobuf"
 
 require "neb/version"
 require "neb/exceptions"
@@ -29,6 +30,8 @@ require "neb/public_key"
 require "neb/address"
 require "neb/account"
 require "neb/key"
+require "neb/transaction"
+require "neb/proto/transaction_pb"
 
 module Neb
   extend self

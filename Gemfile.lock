@@ -6,6 +6,7 @@ PATH
       base58 (~> 0.2)
       bitcoin-secp256k1 (~> 0.4)
       ffi (~> 1.9)
+      google-protobuf (~> 3.5)
       rest-client (~> 2.0)
       scrypt (~> 3.0)
       sha3 (~> 1.0)
@@ -29,6 +30,7 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
+    google-protobuf (3.5.1.2)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (1.0.1)
