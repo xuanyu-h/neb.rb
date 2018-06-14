@@ -12,7 +12,7 @@
 /spec/examples.txt
 /test/tmp/
 /test/version_tmp/
-/tmp/
+# /tmp/
 /log
 
 # Used by dotenv library to load environment variables.
@@ -55,4 +55,5 @@ build-iPhoneSimulator/
 .rvmrc
 .tags*
 
+tmp/*.json
 # End of https://www.gitignore.io/api/ruby
