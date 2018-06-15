@@ -22,12 +22,12 @@ module Neb
       BaseSymbols[base] or raise ArgumentError, "invalid base!"
     end
 
-    def convert(s, from, to, minlen=0)
+    def convert(s, from, to, minlen = 0)
       return Utils.lpad(s, symbols(from)[0], minlen) if from == to
       encode(decode(s, from), to, minlen)
     end
 
-    def encode(v, base, minlen=0)
+    def encode(v, base, minlen = 0)
       syms = symbols(base)
 
       result = ''

@@ -116,27 +116,17 @@ module Neb
       end
 
       def convert_salt(salt)
-        if salt.length != 32 || salt.encoding != Encoding::ASCII_8BIT
-          if salt.length == 64 && salt.encoding == Encoding::UTF_8
-            salt = Utils.hex_to_bin(salt)
-          else
-            raise ArgumentError.new("salt must be 32 bytes")
-          end
-        end
+        return salt if salt.length == 32
+        return Utils.hex_to_bin(salt) if salt.length == 64
 
-        salt
+        raise ArgumentError.new("salt must be 32 bytes")
       end
 
       def convert_iv(iv)
-        if iv.length != 16 || iv.encoding != Encoding::ASCII_8BIT
-          if iv.length == 32 && iv.encoding == Encoding::UTF_8
-            iv = Utils.hex_to_bin(iv)
-          else
-            raise ArgumentError.new("iv must be 16 bytes")
-          end
-        end
+        return iv if iv.length == 16
+        return Utils.hex_to_bin(iv) if iv.length == 32
 
-        iv
+        raise ArgumentError.new("iv must be 16 bytes")
       end
     end
   end

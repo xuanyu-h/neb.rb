@@ -25,6 +25,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "minitest", "~> 5.0"
   spec.add_development_dependency "pry", "~> 0.11"
+  spec.add_development_dependency "guard", "~> 2.14"
+  spec.add_development_dependency "guard-minitest", "~> 2.4"
 
   spec.add_dependency "rest-client", "~> 2.0"
   spec.add_dependency "activesupport", "~> 5"

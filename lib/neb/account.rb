@@ -8,7 +8,7 @@ module Neb
 
     alias_method :set_password, :password=
 
-    def initialize(private_key, password = nil)
+    def initialize(private_key:, password: nil)
       @private_key_obj = PrivateKey.new(private_key)
       @public_key_obj  = @private_key_obj.to_pubkey_obj
       @address_obj     = @public_key_obj.to_address_obj
@@ -16,21 +16,16 @@ module Neb
     end
 
     class << self
-      def create(password = nil)
-        new(PrivateKey.random.to_s, password)
+      def create(password: nil)
+        new(private_key: PrivateKey.random.to_s, password: password)
       end
 
-      def to_key(account)
-        account.to_key
+      def from_key(key:, password:)
+        new(private_key: Key.decrypt(key, password), password: password)
       end
 
-      def from_key(json_key, password)
-        private_key = Key.decrypt(json_key, password)
-        new(private_key, password)
-      end
-
-      def from_key_file(key_file, password)
-        from_key(File.read(key_file), password)
+      def from_key_file(key_file:, password:)
+        from_key(key: File.read(key_file), password: password)
       end
     end
 
@@ -51,9 +46,10 @@ module Neb
       Key.encrypt(address, private_key, password)
     end
 
-    def to_key_file(file_path = nil)
+    def to_key_file(file_path: nil)
       file_path = Neb.root.join('tmp', "#{address}.json") if file_path.blank?
       File.open(file_path, 'w+') { |f| f << Utils.to_json(to_key) }
+      file_path.to_s
     end
   end
 end

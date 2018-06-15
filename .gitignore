@@ -57,3 +57,6 @@ build-iPhoneSimulator/
 
 tmp/*.json
 # End of https://www.gitignore.io/api/ruby
+
+.ruby-version
+Gemfile.lock

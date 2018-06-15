@@ -51,11 +51,11 @@ module Neb
     end
 
     def bin_to_hex(bytes)
-      BaseConvert.convert(bytes, 256, 16)
+      BaseConvert.convert(bytes, 256, 16, bytes.size * 2).force_encoding('utf-8')
     end
 
     def hex_to_bin(hex)
-      BaseConvert.convert(hex, 16, 256)
+      BaseConvert.convert(hex, 16, 256).force_encoding('ascii-8bit')
     end
 
     def random_bytes(size = 32)
