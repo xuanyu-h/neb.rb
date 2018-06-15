@@ -73,7 +73,7 @@ module Neb
     end
 
     def to_address_obj
-      PublicKey.new(to_pubkey).to_address
+      PublicKey.new(to_pubkey_obj.encode(:bin)).to_address
     end
 
     def to_address

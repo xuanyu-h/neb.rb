@@ -3,9 +3,9 @@
 
 module Neb
   class Key
-    KDF = "scrypt".freeze
+    KDF         = "scrypt".freeze
     CIPHER_NAME = "aes-128-ctr".freeze
-    MACHASH = "sha3256".freeze
+    MACHASH     = "sha3256".freeze
 
     KDF_N = 1 << 12
     KDF_R = 8
@@ -27,7 +27,7 @@ module Neb
 
     def encrypt
       derived_key    = Utils.scrypt(password, salt, KDF_N, KDF_R, KDF_P, DKLEN)
-      ciphertext_bin = Utils.aes_encrypt(private_key.encode(:bin), derived_key[0, 16], @iv)
+      ciphertext_bin = Utils.aes_encrypt(private_key.encode(:bin), derived_key[0, 16], iv)
       mac_bin        = Utils.keccak256([derived_key[16, 16], ciphertext_bin, iv, CIPHER_NAME].join)
 
       {

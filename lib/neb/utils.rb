@@ -55,7 +55,7 @@ module Neb
     end
 
     def hex_to_bin(hex)
-      BaseConvert.convert(hex, 16, 256).force_encoding('ascii-8bit')
+      BaseConvert.convert(hex, 16, 256, hex.size / 2).force_encoding('ascii-8bit')
     end
 
     def random_bytes(size = 32)
