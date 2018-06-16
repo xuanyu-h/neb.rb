@@ -5,7 +5,7 @@ require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "corepb.Data" do
-    optional :payload_type, :string, 1
+    optional :type, :string, 1
     optional :payload, :bytes, 2
   end
   add_message "corepb.Transaction" do

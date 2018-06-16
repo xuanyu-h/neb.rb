@@ -64,7 +64,7 @@ module Neb
         key_data = Utils.from_json(key_data) if key_data.is_a?(String)
         key_data = key_data.deep_symbolize_keys!
 
-        raise InvalidJSONKeyError if !validate?(key_data)
+        raise InvalidJSONKeyError("key data validate failed") if !validate?(key_data)
 
         version = key_data[:version]
         address = key_data[:address]
@@ -87,7 +87,7 @@ module Neb
           mac = Utils.keccak256([derived_key[16, 16], ciphertext_bin].join)  # KeyVersion3
         end
 
-        raise InvalidJSONKeyError if Utils.bin_to_hex(mac) != crypto[:mac]
+        raise InvalidJSONKeyError.new("mac is wrong") if Utils.bin_to_hex(mac) != crypto[:mac]
 
         private_key = Utils.aes_decrypt(ciphertext_bin, derived_key[0, 16], iv)
         Utils.bin_to_hex(private_key)
