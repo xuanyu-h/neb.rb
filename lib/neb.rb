@@ -16,6 +16,7 @@ require "rest-client"
 require "secp256k1"
 require "rlp"
 require "google/protobuf"
+require "base64"
 
 require "neb/version"
 require "neb/exceptions"

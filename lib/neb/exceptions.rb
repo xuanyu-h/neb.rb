@@ -9,6 +9,7 @@ module Neb
   class ValidationError < StandardError; end
   class ValueError < StandardError; end
   class AssertError < StandardError; end
+  class UnsignError < StandardError; end
 
   class UnknownParentError < StandardError; end
   class InvalidBlock < ValidationError; end

@@ -78,7 +78,32 @@ module Neb
       end
     end
 
-    def hash_transaction
+    def to_proto
+      raise UnsignError.new("Must sign_hash first") if sign.blank?
+
+      tx = Corepb::Transaction.new(
+        hash:      hash,
+        from:      from_account.address_obj.encode(:bin_extended),
+        to:        to_address.encode(:bin_extended),
+        value:     Utils.zpad(Utils.int_to_big_endian(value), 16),
+        nonce:     nonce,
+        timestamp: timestamp,
+        data:      Corepb::Data.new(data),
+        chain_id:  chain_id,
+        gas_price: Utils.zpad(Utils.int_to_big_endian(gas_price), 16),
+        gas_limit: Utils.zpad(Utils.int_to_big_endian(gas_limit), 16),
+        alg:       Secp256k1::SECP256K1,
+        sign:      sign
+      )
+
+      tx.to_proto
+    end
+
+    def to_proto_str
+      Utils.encode64(to_proto)
+    end
+
+    def calculate_hash
       buffer = [
         from_account.address_obj.encode(:bin_extended),
         to_address.encode(:bin_extended),
@@ -94,8 +119,8 @@ module Neb
       Utils.keccak256(buffer)
     end
 
-    def sign_transaction
-      @hash = hash_transaction
+    def sign_hash
+      @hash = calculate_hash
       @sign = Secp256k1.sign(@hash, from_account.private_key)
     end
 

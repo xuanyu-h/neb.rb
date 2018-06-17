@@ -41,7 +41,6 @@ module Neb
         send_request(:post, "/call", params)
       end
 
-      # TODO: with bytes
       def send_raw_transaction(data)
         send_request(:post, "/rawtransaction", data: data)
       end

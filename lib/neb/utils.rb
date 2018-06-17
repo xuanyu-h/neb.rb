@@ -50,6 +50,10 @@ module Neb
       SecureRandom.uuid
     end
 
+    def encode64(str)
+      Base64.strict_encode64(str)
+    end
+
     def big_endian_to_int(s)
       RLP::Sedes.big_endian_int.deserialize(s.sub(/\A(\x00)+/, '')).force_encoding('utf-8')
     end
