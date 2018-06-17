@@ -28,20 +28,22 @@ Or install it yourself as:
 ### API Example
 ```ruby
 Neb.configure(host: 'https://testnet.nebulas.io')
-
 client = Neb::Client.new
-# The client API
+
 resp = client.api.get_neb_state
 resp.code     # => 200
 resp.success? # => true
 resp.result   # =>  {:chain_id=>100, :tail=>"xxxx", :lib=>"xxxx", :height=>"1085", :protocol_version=>"/neb/1.0.0", :synchronized=>false, :version=>"1.0.1"}
 
-# The Admin API
 resp = client.admin.accounts
 resp.code     # => 200
 resp.success? # => true
 resp.result   # => {:addresses=>["n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE", "n1FNj5aZhKFeFJ8cQ26Lvsr84NDvNSVRu67"]}
+```
 
+### Account Example
+
+```ruby
 # Create a new account with random private_key
 account = Neb::Account.create
 account = Neb::Account.create(password: YOUR_PASSOWRD)
@@ -62,6 +64,28 @@ account = Neb::Account.from_key(key: YOUR_KEY, password: YOUR_PASSOWRD)
 
 # Restore account from a key file
 account = Neb::Account.from_key_file(key_file: YOUR_KEY_FILE, password: YOUR_PASSOWRD)
+```
+
+### Transaction Example
+
+```ruby
+Neb.configure(host: 'https://testnet.nebulas.io')
+client = Neb::Client.new
+
+account = Neb::Account.new(private_key: YOUR_KEY)
+tx = Neb::Transaction.new(
+  chain_id: 1,
+  from_account: account,
+  to_address: 'n1SAeQRVn33bamxN4ehWUT7JGdxipwn8b17',
+  value: 10,
+  nonce: 12,
+  gas_price: 1000000,
+  gas_limit: 2000000
+)
+
+tx.sign_hash
+
+resp = client.api.send_raw_transaction(tx.to_proto_str)
 ```
 
 # Documentation
