@@ -13,20 +13,29 @@ module Neb
     Gy = 32670510020758816978083085130507043184471273380659243275938904335757337482424
     G  = [Gx, Gy].freeze
 
+    SECP256K1 = 1
+
     class InvalidPrivateKey < StandardError; end
 
     class << self # extensions
 
+      def sign(msg, priv)
+        priv = PrivateKey.new(priv)
+        privkey = ::Secp256k1::PrivateKey.new(privkey: priv.encode(:bin), raw: true)
+        sig_raw = privkey.ecdsa_sign(msg, raw: true)
+        privkey.ecdsa_serialize_compact(sig_raw) << SECP256K1
+      end
+
       def priv_to_pub(priv)
         priv = PrivateKey.new(priv)
-        privkey = ::Secp256k1::PrivateKey.new privkey: priv.encode(:bin), raw: true
+        privkey = ::Secp256k1::PrivateKey.new(privkey: priv.encode(:bin), raw: true)
         pubkey = privkey.pubkey
         PublicKey.new(pubkey.serialize).encode(priv.format)
       end
 
       def recoverable_sign(msg, privkey)
-        pk = ::Secp256k1::PrivateKey.new privkey: privkey, raw: true
-        signature = pk.ecdsa_recoverable_serialize pk.ecdsa_sign_recoverable(msg, raw: true)
+        pk = ::Secp256k1::PrivateKey.new(privkey: privkey, raw: true)
+        signature = pk.ecdsa_recoverable_serialize(pk.ecdsa_sign_recoverable(msg, raw: true))
 
         v = signature[1]
         r = Utils.big_endian_to_int signature[0][0,32]

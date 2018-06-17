@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rest-client", "~> 2.0"
   spec.add_dependency "activesupport", "~> 5"
+  spec.add_dependency "rlp", "~> 0.7.3"
   spec.add_dependency "bitcoin-secp256k1", "~> 0.4"
   spec.add_dependency "ffi", "~> 1.9"
   spec.add_dependency "sha3", "~> 1.0"

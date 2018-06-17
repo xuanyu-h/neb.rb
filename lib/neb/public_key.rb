@@ -49,7 +49,7 @@ module Neb
       when :hex
         [BaseConvert.decode(raw[2, 64], 16), BaseConvert.decode(raw[66, 64], 16)]
       when :hex_compressed
-        PublicKey.new(Utils.decode_hex(raw)).decode :bin_compressed
+        PublicKey.new(Utils.hex_to_bin(raw)).decode :bin_compressed
       else
         raise FormatError, "Invalid format!"
       end

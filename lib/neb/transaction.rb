@@ -21,6 +21,7 @@ module Neb
 
     attr_reader :chain_id, :from_account, :to_address, :value, :nonce,
                 :gas_price, :gas_limit, :timestamp, :data
+    attr_reader :hash, :sign
 
     def initialize(chain_id:, from_account:, to_address:, value:, nonce:,
                    gas_price: GAS_PRICE, gas_limit: GAS_LIMIT, contract: {})
@@ -35,11 +36,12 @@ module Neb
       @timestamp    = Time.now.to_i
     end
 
-    # Debug
-    def timestamp=(t)
-      @timestamp = t
+    # For Debug
+    def timestamp
+      1529250226
     end
 
+    # TODO: need test
     def parse_contract(contract)
       payload_type, payload = nil, nil
       contract.deep_symbolize_keys!
@@ -76,20 +78,25 @@ module Neb
       end
     end
 
-    def hashed
+    def hash_transaction
       buffer = [
         from_account.address_obj.encode(:bin_extended),
         to_address.encode(:bin_extended),
-        Utils.to_big_endian(value, 16),
-        Utils.to_big_endian(nonce, 8),
-        Utils.to_big_endian(timestamp, 8),
+        Utils.zpad(Utils.int_to_big_endian(value), 16),
+        Utils.zpad(Utils.int_to_big_endian(nonce), 8),
+        Utils.zpad(Utils.int_to_big_endian(timestamp), 8),
         Corepb::Data.new(data).to_proto,
-        Utils.to_big_endian(chain_id, 4),
-        Utils.to_big_endian(gas_price, 16),
-        Utils.to_big_endian(gas_limit, 16)
+        Utils.zpad(Utils.int_to_big_endian(chain_id), 4),
+        Utils.zpad(Utils.int_to_big_endian(gas_price), 16),
+        Utils.zpad(Utils.int_to_big_endian(gas_limit), 16)
       ].join
 
       Utils.keccak256(buffer)
+    end
+
+    def sign_transaction
+      @hash = hash_transaction
+      @sign = Secp256k1.sign(@hash, from_account.private_key)
     end
 
   end

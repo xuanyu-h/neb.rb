@@ -14,6 +14,7 @@ require "json"
 require "forwardable"
 require "rest-client"
 require "secp256k1"
+require "rlp"
 require "google/protobuf"
 
 require "neb/version"
