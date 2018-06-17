@@ -26,13 +26,18 @@ module Neb
                    gas_price: GAS_PRICE, gas_limit: GAS_LIMIT, contract: {})
       @chain_id     = chain_id
       @from_account = from_account
-      @to_address   = to_address
+      @to_address   = Address.new(to_address)
       @value        = value
       @nonce        = nonce
       @gas_price    = gas_price
       @gas_limit    = gas_limit
       @data         = parse_contract(contract)
       @timestamp    = Time.now.to_i
+    end
+
+    # Debug
+    def timestamp=(t)
+      @timestamp = t
     end
 
     def parse_contract(contract)
@@ -62,14 +67,29 @@ module Neb
       end
 
       if payload.present?
-        payload = JSON.dump(payload.deep_camelize_keys(:upper)).html_safe
+        {
+          type: payload_type,
+          payload: JSON.dump(payload.deep_camelize_keys(:upper)).html_safe
+        }
+      else
+        { type: payload_type }
       end
-
-      { type: payload_type, payload: payload }
     end
 
     def hashed
+      buffer = [
+        from_account.address_obj.encode(:bin_extended),
+        to_address.encode(:bin_extended),
+        Utils.to_big_endian(value, 16),
+        Utils.to_big_endian(nonce, 8),
+        Utils.to_big_endian(timestamp, 8),
+        Corepb::Data.new(data).to_proto,
+        Utils.to_big_endian(chain_id, 4),
+        Utils.to_big_endian(gas_price, 16),
+        Utils.to_big_endian(gas_limit, 16)
+      ].join
 
+      Utils.keccak256(buffer)
     end
 
   end

@@ -58,6 +58,10 @@ module Neb
       BaseConvert.convert(hex, 16, 256, hex.size / 2).force_encoding('ascii-8bit')
     end
 
+    def to_big_endian(s, minlen = 0)
+      BaseConvert.encode(s, 256, minlen).force_encoding('ascii-8bit')
+    end
+
     def random_bytes(size = 32)
       SecureRandom.random_bytes(size)
     end
