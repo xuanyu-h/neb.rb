@@ -24,6 +24,8 @@ Or install it yourself as:
 
 ## Usage
 
+
+### API Example
 ```ruby
 Neb.configure(host: 'https://testnet.nebulas.io')
 
