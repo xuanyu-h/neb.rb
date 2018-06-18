@@ -36,11 +36,6 @@ module Neb
       @timestamp    = Time.now.to_i
     end
 
-    # For Debug
-    def timestamp
-      1529250226
-    end
-
     # TODO: need test
     def parse_contract(contract)
       payload_type, payload = nil, nil
