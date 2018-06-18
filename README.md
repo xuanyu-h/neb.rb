@@ -11,7 +11,7 @@ https://github.com/cryptape/ruby-bitcoin-secp256k1
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'neb'
+gem 'neb', '0.1.1'
 ```
 
 And then execute:
