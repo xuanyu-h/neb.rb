@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "guard-minitest", "~> 2.4"
 
   spec.add_dependency "rest-client", "~> 2.0"
-  spec.add_dependency "activesupport", "~> 5"
+  spec.add_dependency "activesupport"
   spec.add_dependency "rlp", "~> 0.7.3"
   spec.add_dependency "bitcoin-secp256k1", "~> 0.4"
   spec.add_dependency "ffi", "~> 1.9"
