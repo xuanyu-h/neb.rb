@@ -23,11 +23,11 @@ module Neb
         send_request(:get, "/accounts")
       end
 
-      def new_account(passphrase)
+      def new_account(passphrase:)
         send_request(:post, "/account/new", passphrase: passphrase)
       end
 
-      def unlock_account(address, passphrase, duration = '30000000000')
+      def unlock_account(address:, passphrase:, duration: '30000000000')
         params = {
           address:    address,
           passphrase: passphrase,
@@ -36,11 +36,11 @@ module Neb
         send_request(:post, "/account/unlock", params)
       end
 
-      def lock_account(address)
+      def lock_account(address:)
         send_request(:post, "/account/lock", address: address)
       end
 
-      def send_transaction(from, to, value, nonce, gas_price, gas_limit)
+      def send_transaction(from:, to:, value:, nonce:, gas_price: 1_000_000, gas_limit: 20_000)
         params = {
           from:      from,
           to:        to,
@@ -52,12 +52,12 @@ module Neb
         send_request(:post, "/transaction", params)
       end
 
-      def sign_hash(address, hash, alg = 1)
+      def sign_hash(address:, hash:, alg: 1)
         send_request(:post, "/sign/hash", address: address, hash: hash, alg: alg)
       end
 
-      def sign_transaction_with_passphrase(from, to, value, nonce, gas_price, gas_limit,
-                                           type, contract, binary, passphrase)
+      def sign_transaction_with_passphrase(from:, to:, value:, nonce:, gas_price: 1_000_000, gas_limit: 20_000,
+                                           type:, contract:, binary:, passphrase:)
         params = {
           transaction: {
             from:      from,
@@ -76,7 +76,7 @@ module Neb
         send_request(:post, "/transactionWithPassphrase", params)
       end
 
-      def start_pprof(listen)
+      def start_pprof(listen:)
         send_request(:post, "/pprof", listen: listen)
       end
 

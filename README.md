@@ -85,15 +85,15 @@ tx = Neb::Transaction.new(
 
 tx.sign_hash
 
-resp = client.api.send_raw_transaction(tx.to_proto_str)
+resp = client.api.send_raw_transaction(data: tx.to_proto_str)
 resp.code     # => 200
 resp.success? # => true
 resp.result   # => {:txhash=>"8524384dce7e122bfd007e0ba465e597d821e22db6d563b87dfc55d703fb008c", :contract_address=>""}
 
-resp = client.api.get_transaction_receipt("8524384dce7e122bfd007e0ba465e597d821e22db6d563b87dfc55d703fb008c")
+resp = client.api.get_transaction_receipt(hash: "8524384dce7e122bfd007e0ba465e597d821e22db6d563b87dfc55d703fb008c")
 resp.result[:status] # => 1
 
-client.api.get_account_state('n1SAeQRVn33bamxN4ehWUT7JGdxipwn8b17').result # => {:balance=>"10", :nonce=>"0", :type=>87}
+client.api.get_account_state(address: 'n1SAeQRVn33bamxN4ehWUT7JGdxipwn8b17').result # => {:balance=>"10", :nonce=>"0", :type=>87}
 ```
 
 # Documentation

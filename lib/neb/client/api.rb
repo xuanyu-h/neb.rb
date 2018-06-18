@@ -23,11 +23,11 @@ module Neb
         send_request(:get, "/lib")
       end
 
-      def get_account_state(address = '', height = 0)
+      def get_account_state(address: , height: 0)
         send_request(:post, "/accountstate", address: address, height: height)
       end
 
-      def call(from, to, value, nonce, gas_price, gas_limit, contract = nil)
+      def call(from:, to:, value:, nonce:, gas_price: 1_000_000, gas_limit: 20_000, contract: nil)
         params = {
           from:      from,
           to:        to,
@@ -41,27 +41,27 @@ module Neb
         send_request(:post, "/call", params)
       end
 
-      def send_raw_transaction(data)
+      def send_raw_transaction(data:)
         send_request(:post, "/rawtransaction", data: data)
       end
 
-      def get_block_by_hash(hash, is_full = true)
+      def get_block_by_hash(hash:, is_full: true)
         send_request(:post, "/getBlockByHash", hash: hash, full_fill_transaction: is_full)
       end
 
-      def get_block_by_height(height, is_full = true)
+      def get_block_by_height(height:, is_full: true)
         send_request(:post, "/getBlockByHeight", height: height, full_fill_transaction: is_full)
       end
 
-      def get_transaction_receipt(hash)
+      def get_transaction_receipt(hash:)
         send_request(:post, "/getTransactionReceipt", hash: hash)
       end
 
-      def get_transaction_by_contract(address)
+      def get_transaction_by_contract(address:)
         send_request(:post, "/getTransactionByContract", address: address)
       end
 
-      def subscribe(topics = [])
+      def subscribe(topics: [])
         send_request(:post, "/subscribe", topics: topics)
       end
 
@@ -70,7 +70,7 @@ module Neb
       end
       alias_method :gas_price, :get_gas_price
 
-      def estimate_gas(from, to, value, nonce, gas_price, gas_limit, contract = nil, binary = nil)
+      def estimate_gas(from:, to:, value:, nonce:, gas_price: 1_000_000, gas_limit: 20_000, contract: nil, binary: nil)
         params = {
           from:      from,
           to:        to,
@@ -85,11 +85,11 @@ module Neb
         send_request(:post, "/estimateGas", params)
       end
 
-      def get_events_by_hash(hash)
+      def get_events_by_hash(hash:)
         send_request(:post, "/getEventsByHash", hash: hash)
       end
 
-      def get_dynasty(height)
+      def get_dynasty(height:)
         send_request(:post, "/dynasty", height: height)
       end
 
