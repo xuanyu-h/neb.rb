@@ -55,11 +55,11 @@ module Neb
     end
 
     def big_endian_to_int(s)
-      RLP::Sedes.big_endian_int.deserialize(s.sub(/\A(\x00)+/, '')).force_encoding('utf-8')
+      RLP::Sedes.big_endian_int.deserialize(s.sub(/\A(\x00)+/, ''))
     end
 
     def int_to_big_endian(n)
-      RLP::Sedes.big_endian_int.serialize(n).force_encoding('ascii-8bit')
+      RLP::Sedes.big_endian_int.serialize(n)
     end
 
     def bin_to_hex(bytes)

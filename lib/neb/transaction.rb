@@ -36,19 +36,18 @@ module Neb
       @timestamp    = Time.now.to_i
     end
 
-    # TODO: need test
     def parse_contract(contract)
       payload_type, payload = nil, nil
       contract.deep_symbolize_keys!
 
-      if contract.delete(:source).present?
+      if contract[:source].present?
         payload_type = PAYLOAD_DEPLOY_TYPE
         payload = {
           source_type: contract[:source_type],
-          source: contrac[:source],
+          source: contract[:source],
           args: contract[:args]
         }
-      elsif contract.delete(:function).present?
+      elsif contract[:function].present?
         payload_type = PAYLOAD_CALL_TYPE
         payload = {
           function: contract[:function],
@@ -64,10 +63,8 @@ module Neb
       end
 
       if payload.present?
-        {
-          type: payload_type,
-          payload: JSON.dump(payload.deep_camelize_keys(:upper)).html_safe
-        }
+        payload = String.new(JSON.dump(payload.deep_camelize_keys(:upper)).html_safe)
+        { type: payload_type, payload: payload }
       else
         { type: payload_type }
       end
