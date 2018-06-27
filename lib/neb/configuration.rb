@@ -8,7 +8,7 @@ module Neb
 
     DEFAULTS = {
       host:           "http://127.0.0.1:8685",
-      timeout:        "0",
+      timeout:        600,
       api_version:    "/v1",
       log:            "log/neb.log",
       api_endpoint:   "/user",

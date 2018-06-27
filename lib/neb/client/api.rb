@@ -61,8 +61,10 @@ module Neb
         send_request(:post, "/getTransactionByContract", address: address)
       end
 
-      def subscribe(topics: [])
-        send_request(:post, "/subscribe", topics: topics)
+      # topics: ["chain.pendingTransaction"]
+      # on_download_progress: ->(chunk) { print(chunk) }
+      def subscribe(topics:, on_download_progress:)
+        send_request(:post, "/subscribe", { topics: topics }, on_download_progress)
       end
 
       def get_gas_price
@@ -95,9 +97,9 @@ module Neb
 
       private
 
-      def send_request(action, url, payload = {})
+      def send_request(action, url, payload = {}, block = nil)
         request_url = host + api_version + endpoint + url
-        Request.new(action, request_url, payload).execute
+        Request.new(action, request_url, payload, block).execute
       end
     end
   end
