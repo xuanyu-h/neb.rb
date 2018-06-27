@@ -7,7 +7,7 @@ module Neb
     def_delegators :@hash, :to_hash, :[], :[]=, :==, :fetch, :delete, :has_key?
 
     DEFAULTS = {
-      host:           "http://127.0.0.1:8885",
+      host:           "http://127.0.0.1:8685",
       timeout:        "0",
       api_version:    "/v1",
       log:            "log/neb.log",
