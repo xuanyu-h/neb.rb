@@ -11,7 +11,7 @@ https://github.com/cryptape/ruby-bitcoin-secp256k1
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'neb', '0.1.1'
+gem 'neb', '0.1.2'
 ```
 
 And then execute:
@@ -34,6 +34,11 @@ resp = client.api.get_neb_state
 resp.code     # => 200
 resp.success? # => true
 resp.result   # =>  {:chain_id=>100, :tail=>"xxxx", :lib=>"xxxx", :height=>"1085", :protocol_version=>"/neb/1.0.0", :synchronized=>false, :version=>"1.0.1"}
+
+client.api.subscribe(
+  topics: ["chain.pendingTransaction"],
+  on_download_progress: ->(c) { puts c }
+)
 
 resp = client.admin.accounts
 resp.code     # => 200
