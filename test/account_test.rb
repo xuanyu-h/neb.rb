@@ -4,7 +4,7 @@ class NebTest < Neb::TestCase
 
   def setup
     @account  = Neb::Account.create
-    @password = 'password'
+    @password = '123456'
   end
 
   def test_create_account_with_random_private_key

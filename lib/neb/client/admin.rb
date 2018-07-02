@@ -44,10 +44,10 @@ module Neb
         params = {
           from:      from,
           to:        to,
-          value:     value.to_i,
-          nonce:     nonce.to_i,
-          gas_price: gas_price.to_i,
-          gas_limit: gas_limit.to_i
+          value:     value.to_i.to_s,
+          nonce:     nonce.to_i.to_s,
+          gas_price: gas_price.to_i.to_s,
+          gas_limit: gas_limit.to_i.to_s
         }
         send_request(:post, "/transaction", params)
       end
@@ -57,16 +57,15 @@ module Neb
       end
 
       def sign_transaction_with_passphrase(from:, to:, value:, nonce:, gas_price: 1_000_000, gas_limit: 20_000,
-                                           type:, contract:, binary:, passphrase:)
+                                           contract: nil, binary: nil, passphrase:)
         params = {
           transaction: {
             from:      from,
             to:        to,
-            value:     value.to_i,
-            nonce:     nonce.to_i,
-            gas_price: gas_price.to_i,
-            gas_limit: gas_limit.to_i,
-            type:      type,
+            value:     value.to_i.to_s,
+            nonce:     nonce.to_i.to_s,
+            gas_price: gas_price.to_i.to_s,
+            gas_limit: gas_limit.to_i.to_s,
             contract:  contract,
             binary:    binary
           },
