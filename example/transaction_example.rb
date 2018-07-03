@@ -4,11 +4,6 @@ require 'neb'
 Neb.configure(host: 'http://127.0.0.1:8685')  #local node
 
 client = Neb::Client.new
-
-#resp = client.admin.accounts
-#puts resp.result
-#puts resp.result[:addresses][0]
-
 account = Neb::Account.create
 
 tx = Neb::Transaction.new(
@@ -43,7 +38,8 @@ client.api.get_account_state(address: 'n1SAeQRVn33bamxN4ehWUT7JGdxipwn8b17').res
 
 
 
-#call type transaction test
+#call type transaction example, using a contract on the testnet
+#
 Neb.configure(host: 'https://testnet.nebulas.io')
 
 client = Neb::Client.new
