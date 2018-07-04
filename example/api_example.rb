@@ -10,8 +10,8 @@ puts resp.success? # => true
 puts resp.result   # =>  {:chain_id=>100, :tail=>"xxxx", :lib=>"xxxx", :height=>"1085", :protocol_version=>"/neb/1.0.0", :synchronized=>false, :version=>"1.0.1"}
 
 client.api.subscribe(
-    topics: ["chain.pendingTransaction"],
-    on_download_progress: ->(c) { puts c }
+  topics: ["chain.pendingTransaction"],
+  on_download_progress: ->(c) { puts c }
 )
 
 resp = client.admin.accounts

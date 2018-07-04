@@ -1,7 +1,5 @@
 require 'neb'
 
-
-
 # Create a new account with random private_key
 account = Neb::Account.create
 account = Neb::Account.create(password: "passphrase")
@@ -12,7 +10,8 @@ puts account.public_key          # => "35a80ac8a27e2bf072ae84b2cb019e3af0c06547a
 puts account.address             # => "n1NfnKqgXBixjiDkJZDSVwqf7ps5roGwFyJ"
 puts account.password = "123456" # or account.set_password("123456")
 puts account.to_key              # => {:version=>4, :id=>"becde267-902e-4f23-ac01-53a4ba6edac7", :address=>"n1VYLxkZoehWEWPHxi351HgZ2R8Hfn2DGpa" ....}
-account.to_key_file(file_path: "../temp/example_keyjson.json")
+
+account.to_key_file(file_path: "../tmp/example_keyjson.json")
 
 # Create a new account from exist private_key
 account = Neb::Account.new(private_key: account.private_key)
@@ -22,6 +21,5 @@ account = Neb::Account.new(private_key: account.private_key, password: "passphra
 account = Neb::Account.from_key(key: account.to_key, password: "passphrase")
 
 # Restore account from a key file
-account = Neb::Account.from_key_file(key_file: "../temp/example_keyjson.json", password: "123456")
-puts "imported account: #{account.address()}"
-
+account = Neb::Account.from_key_file(key_file: "../tmp/example_keyjson.json", password: "passphrase")
+puts "imported account: #{account.address}"
