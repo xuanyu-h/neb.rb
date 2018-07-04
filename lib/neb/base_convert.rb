@@ -2,9 +2,6 @@
 # frozen_string_literal: true
 
 module Neb
-  #
-  # @see https://github.com/cryptape/ruby-ethereum/blob/master/lib/ethereum/base_convert.rb
-  #
   module BaseConvert
 
     BaseSymbols = {
