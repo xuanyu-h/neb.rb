@@ -15,11 +15,11 @@ account.to_key_file(file_path: "../tmp/example_keyjson.json")
 
 # Create a new account from exist private_key
 account = Neb::Account.new(private_key: account.private_key)
-account = Neb::Account.new(private_key: account.private_key, password: "passphrase")
+account = Neb::Account.new(private_key: account.private_key, password: "123456")
 
 # Restore account from key
-account = Neb::Account.from_key(key: account.to_key, password: "passphrase")
+account = Neb::Account.from_key(key: account.to_key, password: "123456")
 
 # Restore account from a key file
-account = Neb::Account.from_key_file(key_file: "../tmp/example_keyjson.json", password: "passphrase")
+account = Neb::Account.from_key_file(key_file: "../tmp/example_keyjson.json", password: "123456")
 puts "imported account: #{account.address}"
