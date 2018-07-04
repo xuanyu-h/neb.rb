@@ -30,6 +30,18 @@ class TransactionTest < Neb::TestCase
     @genesis_nonce = genesis_resp.result[:nonce].to_i
   end
 
+  def test_validate_initialize_args
+    assert_raises Neb::InvalidTransaction do
+      Neb::Transaction.new(
+        chain_id:     100,
+        from_account: @account,
+        to_address:   @genesis_address,
+        value:        -100,
+        nonce:        @account_nonce + 1
+      )
+    end
+  end
+
   # Sign By Admin API
   def test_transaction_by_admin
     resp = @client.admin.sign_transaction_with_passphrase(

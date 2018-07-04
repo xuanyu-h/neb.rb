@@ -30,10 +30,12 @@ module Neb
       @to_address   = Address.new(to_address)
       @value        = value
       @nonce        = nonce
-      @gas_price    = gas_price
-      @gas_limit    = gas_limit
+      @gas_price    = gas_price >= 0 ? gas_price : GAS_PRICE
+      @gas_limit    = gas_limit >= 0 ? gas_limit : GAS_LIMIT
       @data         = parse_contract(contract)
       @timestamp    = Time.now.to_i
+
+      validate_args!
     end
 
     def parse_contract(contract)
@@ -116,5 +118,12 @@ module Neb
       @sign = Secp256k1.sign(@hash, from_account.private_key)
     end
 
+    private
+
+    def validate_args!
+      if !CHAIN_ID_LIST.keys.include?(chain_id) || value < 0 || nonce < 0
+        raise InvalidTransaction
+      end
+    end
   end
 end
