@@ -13,7 +13,7 @@ module Neb
     Gy = 32670510020758816978083085130507043184471273380659243275938904335757337482424
     G  = [Gx, Gy].freeze
 
-    SECP256K1 = 1;
+    SECP256K1 = 1
 
     class InvalidPrivateKey < StandardError; end
 
