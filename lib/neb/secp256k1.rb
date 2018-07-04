@@ -13,17 +13,25 @@ module Neb
     Gy = 32670510020758816978083085130507043184471273380659243275938904335757337482424
     G  = [Gx, Gy].freeze
 
-    SECP256K1 = 1
+    SECP256K1 = 1;
 
     class InvalidPrivateKey < StandardError; end
 
-    class << self # extensions
+    class << self
 
       def sign(msg, priv)
         priv = PrivateKey.new(priv)
         privkey = ::Secp256k1::PrivateKey.new(privkey: priv.encode(:bin), raw: true)
-        sig_raw = privkey.ecdsa_sign(msg, raw: true)
-        privkey.ecdsa_serialize_compact(sig_raw) << SECP256K1
+        signature = privkey.ecdsa_recoverable_serialize(
+          privkey.ecdsa_sign_recoverable(msg, raw: true)
+        )
+
+        # v = signature[1]
+        # r = Utils.bin_to_hex(signature[0][0,32])
+        # s = Utils.bin_to_hex(signature[0][32,32])
+        # puts v, r, s
+
+        signature[0] << signature[1]
       end
 
       def priv_to_pub(priv)
@@ -31,35 +39,6 @@ module Neb
         privkey = ::Secp256k1::PrivateKey.new(privkey: priv.encode(:bin), raw: true)
         pubkey = privkey.pubkey
         PublicKey.new(pubkey.serialize).encode(priv.format)
-      end
-
-      def recoverable_sign(msg, privkey)
-        pk = ::Secp256k1::PrivateKey.new(privkey: privkey, raw: true)
-        signature = pk.ecdsa_recoverable_serialize(pk.ecdsa_sign_recoverable(msg, raw: true))
-
-        v = signature[1]
-        r = Utils.big_endian_to_int signature[0][0,32]
-        s = Utils.big_endian_to_int signature[0][32,32]
-
-        [v,r,s]
-      end
-
-      def signature_verify(msg, vrs, pubkey)
-        pk = ::Secp256k1::PublicKey.new(pubkey: pubkey)
-        raw_sig = Utils.zpad_int(vrs[1]) + Utils.zpad_int(vrs[2])
-
-        sig = ::Secp256k1::C::ECDSASignature.new
-        sig[:data].to_ptr.write_bytes(raw_sig)
-
-        pk.ecdsa_verify(msg, sig)
-      end
-
-      def recover_pubkey(msg, vrs, compressed: false)
-        pk = ::Secp256k1::PublicKey.new(flags: ::Secp256k1::ALL_FLAGS)
-        sig = Utils.zpad_int(vrs[1]) + Utils.zpad_int(vrs[2])
-        recsig = pk.ecdsa_recoverable_deserialize(sig, vrs[0])
-        pk.public_key = pk.ecdsa_recover msg, recsig, raw: true
-        pk.serialize compressed: compressed
       end
     end
   end
