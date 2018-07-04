@@ -67,5 +67,6 @@ module Neb
       @logger = ::Logger.new(CONFIG[:log])
       @logger.formatter = ::Logger::Formatter.new
     end
+    @logger.level = CONFIG[:log_level]
   end
 end

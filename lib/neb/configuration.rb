@@ -10,7 +10,8 @@ module Neb
       host:           "http://127.0.0.1:8685",
       timeout:        600,
       api_version:    "/v1",
-      log:            "log/neb.log",
+      log:            STDOUT,
+      log_level:      :info,
       api_endpoint:   "/user",
       admin_endpoint: "/admin"
     }.freeze
